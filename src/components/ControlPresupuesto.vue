@@ -1,5 +1,6 @@
 <script setup>
 import Imagen from '../assets/img/grafico.jpg'
+import { formatearCantidad } from "../helpers";
 
 const props = defineProps({
     presupuesto: {
@@ -18,6 +19,7 @@ const props = defineProps({
         <div class="contenedor-grafico">
             <img
                 :src="Imagen"
+                alt="imagen gráfico"
             />
         </div>
 
@@ -27,12 +29,12 @@ const props = defineProps({
             </button>
             <p>
                 <span>Presupuesto:</span>
-                $ {{ presupuesto }}
+                {{ formatearCantidad(presupuesto) }}
             </p>
 
             <p>
                 <span>Disponible:</span>
-                $ {{ disponible }}
+                {{ formatearCantidad(disponible) }}
             </p>
 
             <p>
