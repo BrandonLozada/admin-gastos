@@ -1,10 +1,23 @@
 <script setup>
 import cerrarModal from '../assets/img/cerrar.svg'
+import {TRUE} from "sass";
 
-const emit = defineEmits(['ocultar-modal'])
+const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria'])
 const props = defineProps({
   modal: {
     type: Object,
+    required: true
+  },
+  nombre: {
+    type: String,
+    required: true
+  },
+  cantidad: {
+    type: [String, Number],
+    required: true
+  },
+  categoria: {
+    type: String,
     required: true
   }
 })
