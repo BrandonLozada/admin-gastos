@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import Presupuesto from './components/Presupuesto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue'
 import Modal from './components/Modal.vue'
-import Gasto from './components/Gastos.vue'
+import Gasto from './components/Gasto.vue'
 import { generarId } from "./helpers"
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 
