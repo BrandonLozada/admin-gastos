@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Alerta from "./Alerta.vue";
 import cerrarModal from '../assets/img/cerrar.svg'
 
@@ -26,12 +26,18 @@ const props = defineProps({
   disponible: {
     type: Number,
     required: true
+  },
+  id: {
+    type: [String, null],
+    required: true
   }
 })
 
+const old = props.cantidad
+
 const agregarGasto = () => {
   // Validar que no haya campos vacíos
-  const { nombre, cantidad, categoria, disponible } = props
+  const { nombre, cantidad, categoria, disponible, id } = props
 
   if ([cantidad, categoria, nombre].includes('')) {
     error.value = 'Todos los campos son obligatorios'
@@ -52,18 +58,33 @@ const agregarGasto = () => {
   }
 
   /*
-    Validar que el usuario no gaste más de lo disponible
+    Validar que el usuario no gaste más de lo disponible.
    */
-  if (cantidad > disponible) {
-    error.value = 'Has excedido el Presupuesto'
-    setTimeout(() => {
+  if (id) {
+    // Tomar en cuenta el gasto ya realizado
+    if (cantidad > old + disponible) {
+      error.value = 'Has excedido el Presupuesto'
+      setTimeout(() => {
         error.value = ''
       }, 3000)
-    return
+      return
+    }
+  } else {
+    if (cantidad > disponible) {
+      error.value = 'Has excedido el Presupuesto'
+      setTimeout(() => {
+          error.value = ''
+        }, 3000)
+      return
+    }
   }
 
   emit('guardar-gasto')
 }
+
+const isEditing = computed(() => {
+  return props.id
+})
 </script>
 
 <template>
@@ -84,7 +105,7 @@ const agregarGasto = () => {
           class="nuevo-gasto"
           @submit.prevent="agregarGasto"
       >
-        <legend>Añadir Gasto</legend>
+        <legend> {{ isEditing ? 'Guardar Cambios' : 'Añadir Gasto' }}</legend>
 
         <Alerta v-if="error">{{ error }}</Alerta>
 
@@ -130,7 +151,7 @@ const agregarGasto = () => {
 
           <input
               type="submit"
-              value="Añadir Gasto"
+              :value="[isEditing ? 'Guardar Cambios' : 'Añadir Gasto']"
           >
       </form>
     </div>
