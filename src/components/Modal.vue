@@ -4,7 +4,8 @@ import Alerta from "./Alerta.vue";
 import cerrarModal from '../assets/img/cerrar.svg'
 
 const error = ref('')
-const emit = defineEmits(['ocultar-modal', 'guardar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
+const emit = defineEmits(['ocultar-modal', 'guardar-gasto', 'update:nombre',
+'update:cantidad', 'update:categoria', 'eliminar-gasto'])
 
 const props = defineProps({
   modal: {
@@ -153,6 +154,15 @@ const isEditing = computed(() => {
               type="submit"
               :value="[isEditing ? 'Guardar Cambios' : 'Añadir Gasto']"
           >
+
+          <button
+            type="button"
+            class="btn-eliminar"
+            v-if="isEditing"
+            @click="$emit('eliminar-gasto', props.id)"
+          >
+            Eliminar Gasto
+          </button>
       </form>
     </div>
   </div>
@@ -220,6 +230,17 @@ const isEditing = computed(() => {
     color: var(--blanco);
     font-weight: 700;
     margin-top: 1rem;
+    cursor: pointer;
+  }
+  .btn-eliminar {
+    border: none;
+    padding: 1rem;
+    width: 100%;
+    background-color: #ef4444;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--blanco);
+    margin-top: 10rem;
     cursor: pointer;
   }
 </style>

@@ -31,7 +31,7 @@ defineEmits(['seleccionar-gasto'])
 <template>
   <div class="gasto sombra">
     <div class="contenido">
-      <img 
+      <img
         :src="diccionarioIconos[gasto.categoria]"
         alt="Icono gasto"
         class="icono"

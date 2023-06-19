@@ -95,10 +95,17 @@ const seleccionarGasto = id => {
   Object.assign(gasto, gastoEditar)
   mostrarModal()
 }
+
+const eliminarGasto = id => {
+  if (confirm('¿Deseas eliminar el gasto?')){
+    gastos.value = gastos.value.filter(gasto => gasto.id !== id)
+    ocultarModal()
+  }
+}
 </script>
 
 <template>
-  <div 
+  <div
     :class="{fijar: modal.mostrar}"
   >
     <header>
@@ -142,6 +149,7 @@ const seleccionarGasto = id => {
         v-if="modal.mostrar"
         @ocultar-modal="ocultarModal"
         @guardar-gasto="guardarGasto"
+        @eliminar-gasto="eliminarGasto"
         :modal="modal"
         :disponible="disponible"
         :id="gasto.id"
